@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "strict": true,
+      "target": "es5",
+      "noEmitOnError": true,
+      "strictNullChecks": true, // set false if needed
+      "noUnusedLocals": false,
+      "noImplicitReturns": false,
+      "lib": [
+          "ES2015"
+      ],
+      "outDir": "dist",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "skipLibCheck": true,
+      "strictPropertyInitialization": false
+  },
+  "include": [
+      "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+  ]
+}

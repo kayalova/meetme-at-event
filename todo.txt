@@ -1,3 +1,0 @@
-1. Install dependencies +
-2. Config docker +
-3. Run docker +

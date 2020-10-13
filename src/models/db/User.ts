@@ -1,5 +1,4 @@
-import { prop, getModelForClass } from "@typegoose/typegoose"
-// import * as mongoose from "mongoose"
+import { prop, getModelForClass, DocumentType } from "@typegoose/typegoose"
 
 export class User {
     @prop({ required: true })
@@ -9,9 +8,16 @@ export class User {
     public email: string
 
     @prop({ required: true })
-    password: string
+    public password: string
 }
 
 export const UserModel = getModelForClass(User)
 
-// export const isExists
+export const isUserExists = async (email: string): Promise<boolean> =>
+    await UserModel.findOne({ email }) !== null
+
+export const findUser = async (email: string, password: string): Promise<DocumentType<User> | null> =>
+    await UserModel.findOne({ email, password })
+
+export const createUser = async (user: User): Promise<DocumentType<User>> =>
+    await (new UserModel(user)).save()

@@ -1,4 +1,5 @@
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose"
+import { prop, getModelForClass, Ref, DocumentType } from "@typegoose/typegoose"
+import { } from "mongoose"
 import { User } from "./User"
 
 class Event {
@@ -15,7 +16,25 @@ class Event {
     public willVisit: number
 
     @prop({ ref: () => User })
-    public car?: Ref<User>
+    public creator?: Ref<User>
 }
 
 export const EventModel = getModelForClass(Event)
+
+export const createEvent = async (event: Event): Promise<DocumentType<Event>> =>
+    await (new EventModel(event)).save()
+
+export const joinEvent = async (id: Object): Promise<DocumentType<Event> | null> => {
+    const event = await EventModel.findById(id)
+    event && (event.willVisit += 1) && await event.save()
+    return event
+}
+
+export const cancelEventVisit = async (id: Object): Promise<DocumentType<Event> | null> => {
+    const event = await EventModel.findById(id)
+    event && (event.willVisit -= 1) && await event.save()
+    return event
+}
+
+export const getFilteredEvents = async (options: Object): Promise<DocumentType<Event>[]> =>
+    await EventModel.find(options)

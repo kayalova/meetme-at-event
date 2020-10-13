@@ -1,5 +1,6 @@
 import * as Koa from "koa"
 import bodyParser from "koa-bodyparser-ts"
+import * as logger from "koa-logger"
 import * as mongoose from "mongoose"
 import { loadControllers } from "koa-router-ts"
 import * as path from "path"
@@ -12,6 +13,7 @@ console.log("connected to mongo")
 const app: Koa = new Koa()
 const router = loadControllers(path.join(__dirname, "controllers"), { recurse: true })
 
+app.use(logger())
 app.use(bodyParser())
 app.use(router.routes())
 app.use(router.allowedMethods())

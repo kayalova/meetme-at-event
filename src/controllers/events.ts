@@ -5,7 +5,8 @@ import { Controller, Post, Get, Put } from "koa-router-ts"
 export default class {
     @Post("/create")
     async createEvent(ctx: Context): Promise<any> {
-
+        // const {name, descr, address, creator} = ctx.body
+        // const event = new Snippet({name, descr, address, creator, })
     }
 
     @Get("/")

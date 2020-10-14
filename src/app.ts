@@ -4,6 +4,9 @@ import * as logger from "koa-logger"
 import { loadControllers } from "koa-router-ts"
 import * as db from "./models/db"
 import * as path from "path"
+import * as dotenv from "dotenv"
+
+dotenv.config({ path: `${__dirname}/../.env` })
 
 const app: Koa = new Koa()
 const router = loadControllers(path.join(__dirname, "controllers"), { recurse: true })
@@ -15,7 +18,7 @@ app.use(router.allowedMethods())
 
 db.openConnection().then(() => {
     console.log("connected to db")
-    app.listen(3000, () => {
-        console.log("server started on port 3000")
+    app.listen(process.env.APP_SERVER_PORT, () => {
+        console.log(`server started on port ${process.env.APP_SERVER_PORT}`)
     })
 })

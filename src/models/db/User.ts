@@ -20,4 +20,4 @@ export const findUser = async (email: string, password: string): Promise<Documen
     await UserModel.findOne({ email, password })
 
 export const createUser = async (user: User): Promise<DocumentType<User>> =>
-    await (new UserModel(user)).save()
+    await UserModel.create(user)

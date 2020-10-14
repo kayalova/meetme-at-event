@@ -5,3 +5,10 @@ export interface IEvent {
     willVisit: number
     creator: Object
 }
+
+export interface IUser {
+    name: string
+    email: string
+    password: string
+
+}

@@ -8,20 +8,19 @@ export default class {
     async signUp(ctx: Context): Promise<void> {
         const { email } = ctx.request.body
         const isExists = await services.UserService.isExists(email)
-        // if (isExists) return notification user with such email already...
+        if (isExists) return // handle it, return 400 or
         const { name, password } = ctx.request.body
-        const user = await services.EventService.create({ name, email, password })
-        // TODO: generate tokens and include them in response
-        ctx.body = user
+        const user = await services.UserService.create({ name, email, password })
+        const token = services.TokenService.generateAccess(user._id)
+        ctx.body = { user, token }
     }
 
     @Post("/signin")
     async signin(ctx: Context): Promise<void> {
         const { email, password } = ctx.request.body
         const user = await services.UserService.findOne(email, password)
-        // if (user === null) handle it, return 400 or
-        // else
-        // TODO: generate tokens
-        ctx.body = { user }
+        if (user === null) return // handle it, return 400 or
+        const token = services.TokenService.generateAccess(user._id)
+        ctx.body = { user, token }
     }
 }

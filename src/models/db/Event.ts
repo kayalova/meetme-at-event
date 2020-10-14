@@ -2,7 +2,7 @@ import { prop, getModelForClass, Ref, DocumentType } from "@typegoose/typegoose"
 import { } from "mongoose"
 import { User } from "./User"
 
-class Event {
+export class Event {
     @prop({ required: true })
     public name: string
 
@@ -22,7 +22,7 @@ class Event {
 export const EventModel = getModelForClass(Event)
 
 export const createEvent = async (event: Event): Promise<DocumentType<Event>> =>
-    await (new EventModel(event)).save()
+    await EventModel.create(event)
 
 export const joinEvent = async (id: Object): Promise<DocumentType<Event> | null> => {
     const event = await EventModel.findById(id)

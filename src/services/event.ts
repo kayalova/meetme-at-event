@@ -2,8 +2,8 @@ import { DocumentType } from "@typegoose/typegoose"
 import * as Events from "../models/db/Event"
 
 export class EventService {
-    static async getAll(): Promise<DocumentType<Events.Event>[]> {
-        return await Events.getFilteredEvents({})
+    static async getAll(filterQuery: Object = {}): Promise<DocumentType<Events.Event>[]> {
+        return await Events.getFilteredEvents(filterQuery)
     }
 
     static async join(id: Object): Promise<DocumentType<Events.Event> | null> {

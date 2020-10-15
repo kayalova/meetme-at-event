@@ -17,4 +17,25 @@ $ docker-compose up --build
 ``` 
 
 ## API
-```in proccess :)```
+```
+sign in
+POST /auth/signin
+
+sign up
+POST /auth/signup
+
+get all events
+GET /events/
+
+create event (authentication required)
+POST /events/create
+
+filter events
+GET /events/filter
+
+join event
+PUT /events/join
+
+cancel event's visit
+PUT /events/cancel
+```

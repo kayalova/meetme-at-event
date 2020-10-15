@@ -15,6 +15,7 @@ export default class {
 
         const user = await UserService.create({ name, email, password })
         const token = TokenService.generateAccess(user._id)
+        ctx.status = 201
         ctx.body = { user, token }
     }
 

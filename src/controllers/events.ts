@@ -7,8 +7,10 @@ import * as middleware from "../middleware"
 export default class {
     @Post("/create", middleware.isAuthorized, middleware.isEmptyBody)
     async createEvent(ctx: Context): Promise<any> {
-        const { name, description, address, willVisit, creator } = ctx.body
-        EventService.create({ name, description, address, willVisit, creator })
+        const { name, description, address, willVisit, creator } = ctx.request.body
+        const event = await EventService.create({ name, description, address, willVisit, creator })
+        ctx.body = { event }
+        ctx.status = 201
     }
 
     @Get("/")
@@ -19,20 +21,20 @@ export default class {
 
     @Get("/filter", middleware.isEmptyBody)
     async getFilteredEvents(ctx: Context): Promise<any> {
-        const events = await EventService.getAll({ ...ctx.request.body })
+        const events = await EventService.getAll({ ...ctx.request.query })
         ctx.body = events
     }
 
     @Put("/join", middleware.isEmptyBody)
     async joinEvent(ctx: Context): Promise<any> {
-        const id = ctx.request.body
+        const { id } = ctx.request.body
         const event = await EventService.join(id)
         ctx.body = event
     }
 
     @Put("/cancel", middleware.isEmptyBody)
     async cancelMyVisit(ctx: Context): Promise<any> {
-        const id = ctx.request.body
+        const { id } = ctx.request.body
         const event = await EventService.cancelVisit(id)
         ctx.body = event
     }

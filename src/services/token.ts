@@ -6,7 +6,8 @@ export class TokenService {
     }
 
     static verifyToken(token: string, id: string): boolean {
-        const decoded = jwt.decode(token, process.env.SECRET_KEY as string)
-        return decoded.id === id
+        try {
+            return !!jwt.decode(token, process.env.SECRET_KEY as string)
+        } catch { return false } // when token is invalid it falls server :| so i have to catch err and return value this way
     }
 }
